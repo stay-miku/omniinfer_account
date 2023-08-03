@@ -66,6 +66,9 @@ class system:
             if i >= config.update_interval:
                 logging.info("Update: update")
                 omniifer_api.update()
+                logging.info("Update: backup account data")
+                for key in self.account_list:
+                    self.account_list[key].save(os.path.join(self.path, key + ".json"))
                 i = 0
         logging.info("Update: stop")
         self.update_stop = False
@@ -153,7 +156,8 @@ class system:
                 if result is None:
                     return {"code": 1, "msg": "No task"}
                 if result["status"] == 2:
-                    return {"code": 0, "msg": "", "imgs": result["imgs"], "seed": json.loads(result["info"])}
+                    return {"code": 0, "msg": "", "imgs": result["imgs"], "seed": json.loads(result["info"])["seed"]
+                            , "time": result["debug_info"]["submit_time_ms"] - result["debug_info"]["finish_time_ms"]}
                 elif result["status"] == 2 or result["status"] == 3:
                     return {"code": 1, "msg": result["failed reason"]}
                 else:
@@ -313,4 +317,3 @@ class system:
         except OmniInferAccountError as e:
             logging.warning("AddN: " + str(e))
             return {"code": 1, "msg": str(e)}
-

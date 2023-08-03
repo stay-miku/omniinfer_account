@@ -104,7 +104,7 @@ class account:
             raise error.OmniInferAccountError("Key steps is not int or out of range")
         elif key == "cfg_scale" and (not isinstance(value, int) or not 0 <= value <= 30):
             raise error.OmniInferAccountError("Key cfg_scale is not int or out of range")
-        elif key == "seed" and (not isinstance(value, int) or not -1 <= value <= 2 ^ 32):
+        elif key == "seed" and (not isinstance(value, int) or not -1 <= value <= 2 ** 32):
             raise error.OmniInferAccountError("Key seed is not int or out of range")
         elif (key == "width" or key == "height") and (not isinstance(value, int) or not 1 <= value <= 2048
                                                       or not value % 8 == 0):
