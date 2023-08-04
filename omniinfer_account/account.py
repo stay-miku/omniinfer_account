@@ -197,6 +197,7 @@ class account:
                 width=self.t2i_data.width,
                 restore_faces=self.t2i_data.restore_faces,
                 clip_skip=self.t2i_data.clip_skip,
+                sd_vae=self.t2i_data.sd_vae,
                 using_controlnet=self.t2i_data.using_controlnet,
                 controlnet_model=self.t2i_data.controlnet_model,
                 controlnet_module=self.t2i_data.controlnet_module,
@@ -253,6 +254,7 @@ class account:
                 denoising_strength=self.i2i_data.denoising_strength,
                 restore_faces=self.i2i_data.restore_faces,
                 clip_skip=self.i2i_data.clip_skip,
+                sd_vae=self.i2i_data.sd_vae,
                 api_key=self.self_api_key if self.using_self_api_key else ""
             )
             if not self.using_self_api_key:

@@ -17,6 +17,7 @@ class txt2img:
     width: int = 512
     restore_faces: bool = False
     clip_skip: int = 2
+    sd_vae: str = ""
     using_controlnet: bool = False
     controlnet_model: str = "control_v11p_sd15_openpose"
     controlnet_module: str = "none"
@@ -57,6 +58,7 @@ class img2img:
     denoising_strength: float = 0.75
     restore_faces: bool = False
     clip_skip: int = 2
+    sd_vae: str = ""
 
     def __getitem__(self, key):
         return getattr(self, key)
