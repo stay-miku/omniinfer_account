@@ -114,10 +114,10 @@ class account:
             raise error.OmniInferAccountError("Key " + key + " is not bool")
         elif key == "clip_skip" and (not isinstance(value, int) or not 1 <= value):
             raise error.OmniInferAccountError("Key clip_skip is not int or out of range")
-        elif key == "controlnet_weight" and (not isinstance(value, float) or 0.0 <= value <= 2.0):
+        elif key == "controlnet_weight" and (not isinstance(value, float) or not 0.0 <= value <= 2.0):
             raise error.OmniInferAccountError("Key controlnet_weight is not float or out of range")
         elif (value == "control_mode" or key == "controlnet_resize_mode") and (
-                not isinstance(value, int) or 0 <= value <= 2):
+                not isinstance(value, int) or not 0 <= value <= 2):
             raise error.OmniInferAccountError("Key " + key + "is not int or out of range")
         elif value == "controlnet_mask" and (not isinstance(value, int) or not value >= -1):
             raise error.OmniInferAccountError("Key controlnet_mask is not int or out of range")
@@ -127,7 +127,7 @@ class account:
             raise error.OmniInferAccountError("Key " + key + " is not int")
         elif (key == "controlnet_guidance_start" or key == "controlnet_guidance_end") and not isinstance(value, float):
             raise error.OmniInferAccountError("Key " + key + " is not float")
-        elif key == "denoising_strength" and (not isinstance(value, float) or 0.0 <= value <= 1.0):
+        elif key == "denoising_strength" and (not isinstance(value, float) or not 0.0 <= value <= 1.0):
             raise error.OmniInferAccountError("Key denoising_strength is not float or out of range")
 
         # if key.startswith("control") and mode == "i2i":
