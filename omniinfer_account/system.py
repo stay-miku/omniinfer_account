@@ -158,7 +158,7 @@ class system:
                 if result["status"] == 2:
                     return {"code": 0, "msg": "", "imgs": result["imgs"], "seed": json.loads(result["info"])["seed"]
                             , "time": result["debug_info"]["submit_time_ms"] - result["debug_info"]["finish_time_ms"]}
-                elif result["status"] == 2 or result["status"] == 3:
+                elif result["status"] == 3 or result["status"] == 4:
                     return {"code": 1, "msg": result["failed reason"]}
                 else:
                     return {"code": 1, "msg": "UnException status"}
