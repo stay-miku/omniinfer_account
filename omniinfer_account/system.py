@@ -182,7 +182,10 @@ class system:
     def set(self, account_id: int, mode: str, key: str, value):
         try:
             self.account_list[str(account_id)].set(mode, key, value)
-            logging.info("Set: {} set {}.{} as {}".format(str(account_id), mode, key, str(value)))
+            if key != "init_image" and key != "controlnet_input_image":
+                logging.info("Set: {} set {}.{} as {}".format(str(account_id), mode, key, str(value)))
+            else:
+                logging.info("Set: {} set {}.{}".format(str(account_id), mode, key))
             return {"code": 0, "msg": ""}
         except KeyError:
             logging.warning("Set: Unknown account id {}".format(str(account_id)))
