@@ -12,7 +12,7 @@ from . import config
 
 
 class system:
-    task_list: List[List[str]]
+    task_list: List[List]
     account_list: Dict[str, account]
     stop: bool
     update_stop: bool
@@ -89,6 +89,9 @@ class system:
                     task_id = self.account_list[task[0]].txt2img()
                 elif task[1] == "i2i":
                     task_id = self.account_list[task[0]].img2img()
+                elif task[1] == "upscale":
+                    task_id = self.account_list[task[0]]\
+                        .upscale(task[2]["image"], task[2]["resize"], task[2]["upscaler"])
                 else:
                     raise OmniInferAccountError("Unknown task mode: {}".format(task[1]))
                 logging.info("Task: {} task_id {}".format(task[0], task_id))
@@ -145,6 +148,20 @@ class system:
 
         except KeyError:
             logging.warning("AddTask: " + "Unknown account id {}".format(str(account_id)))
+            return {"code": 1, "msg": "Unknown account id {}".format(str(account_id))}
+
+    def add_upscale_task(self, account_id: int, image: str, resize: float, upscaler="R-ESRGAN 4x+"):
+        try:
+            if self.account_list[str(account_id)].status != 0:
+                logging.warning("AddTask: {} is already in the queue".format(str(account_id)))
+                return {"code": 1, "msg": "There are already task in the queue"}
+            self.account_list[str(account_id)].status = 1
+            self.task_list.append([str(account_id), "upscale", {"image": image, "resize": resize, "upscaler": upscaler}])
+            logging.info("AddUpscaleTask: {} add task".format(str(account_id)))
+            return {"code": 0, "msg": "Currently ranked {} in the task queue".format(str(len(self.task_list)))}
+
+        except KeyError:
+            logging.warning("AddUpscaleTask: " + "Unknown account id {}".format(str(account_id)))
             return {"code": 1, "msg": "Unknown account id {}".format(str(account_id))}
 
     # code 0: complete, 1: error, 2: waiting, 3, processing

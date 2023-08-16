@@ -293,3 +293,17 @@ class account:
             logging.error("OMNI_INFER_API_ERROR: " + str(e))
             raise error.OmniInferAccountError(str(e))
 
+    def upscale(self, image: str, resize: float, upscaler="R-ESRGAN 4x+"):
+        data = omniifer_api.upscale_data(image=image, upscaling_resize=resize, upscaler_1=upscaler, api_key= self.self_api_key if self.using_self_api_key else -1)
+        if image == "":
+            raise error.OmniInferAccountError("Image can not be null")
+
+        try:
+            task_id = omniifer_api.upscale(data)
+            return task_id
+
+        except omniifer_api.OMNI_INFER_API_ERROR as e:
+            logging.error(str(e))
+            raise error.OmniInferAccountError("API error")
+
+
