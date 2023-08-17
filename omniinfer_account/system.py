@@ -173,10 +173,10 @@ class system:
                 if result is None:
                     return {"code": 1, "msg": "No task"}
                 if result["status"] == 2:
-                    if "info" in result:
+                    try:
                         return {"code": 0, "msg": "", "imgs": result["imgs"], "seed": json.loads(result["info"])["seed"]
                                 , "time": result["debug_info"]["submit_time_ms"] - result["debug_info"]["finish_time_ms"]}
-                    else:
+                    except json.JSONDecodeError:
                         return {"code": 0, "msg": "", "imgs": result["imgs"],
                                 "time": result["debug_info"]["submit_time_ms"] - result["debug_info"]["finish_time_ms"]}
                 elif result["status"] == 3 or result["status"] == 4:
