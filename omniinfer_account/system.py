@@ -169,7 +169,7 @@ class system:
         try:
             result = self.account_list[str(account_id)].last_result
             if self.account_list[str(account_id)].status == 0:
-                self.account_list[str(account_id)].last_result = None
+                self.account_list[str(account_id)].last_result = {}
                 if result is None:
                     return {"code": 1, "msg": "No task"}
                 if result["status"] == 2:
